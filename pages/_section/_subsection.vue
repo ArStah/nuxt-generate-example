@@ -1,6 +1,6 @@
 <template>
   <section class="container">
-    This is category {{ name }}<br>
+    This is {{ sectionName }}<br>
     {{ data.param }}, {{ data.param2 }}
   </section>
 </template>
@@ -9,7 +9,7 @@
   export default {
     asyncData({ params, payload }) {
       return {
-        name: params.name,
+        sectionName: params.subsection,
         data: payload,
       };
     },

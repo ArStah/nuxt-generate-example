@@ -32,6 +32,16 @@ module.exports = {
             param: 'Second Category param1',
             param2: 'Second Category param2',
           },
+        },
+        otherSection: {
+          first: {
+            param: 'First otherSection param1',
+            param2: 'First otherSection param2',
+          },
+          second: {
+            param: 'Second otherSection param1',
+            param2: 'Second otherSection param2',
+          },
         }
       };
       const routes = [];
