@@ -1,7 +1,7 @@
 <template>
   <section class="container">
     This is category {{ name }}<br>
-    {{ data.param1, data.param2 }}
+    {{ data.param }}, {{ data.param2 }}
   </section>
 </template>
 
