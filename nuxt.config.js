@@ -1,3 +1,26 @@
+const data = {
+  url: 'catégorie', //locale-depended url
+  categories: [
+    {
+      url: 'premier',
+      data: {
+        name: 'Première catégorie',
+        param: 'First Category param1',
+        param2: 'First Category param2',
+      }
+    },
+    {
+      url: 'seconde',
+      data: {
+        name: 'Deuxième catégorie',
+        param: 'Second Category param1',
+        param2: 'Second Category param2',
+      }
+    },
+  ],
+};
+
+
 module.exports = {
   /*
   ** Headers of the page
@@ -7,11 +30,11 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Nuxt.js project' }
+      { hid: 'description', name: 'description', content: 'Nuxt.js project' },
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+    ],
   },
   /*
   ** Customize the progress bar color
@@ -20,44 +43,38 @@ module.exports = {
   /*
   ** Build configuration
   */
+  router: {
+    extendRoutes (routes, resolve) {
+      return [
+        {
+          path: `/${data.url}`,
+          component: resolve(__dirname, 'pages/category/index.vue')
+        },
+        {
+          path: `/${data.url}/:name`,
+          component: resolve(__dirname, 'pages/category/_name.vue')
+        },
+      ];
+    }
+  },
   generate: {
     routes() {
-      const sections = {
-        category: {
-          first: {
-            param: 'First Category param1',
-            param2: 'First Category param2',
-          },
-          second: {
-            param: 'Second Category param1',
-            param2: 'Second Category param2',
-          },
-        },
-        otherSection: {
-          first: {
-            param: 'First otherSection param1',
-            param2: 'First otherSection param2',
-          },
-          second: {
-            param: 'Second otherSection param1',
-            param2: 'Second otherSection param2',
-          },
-        }
-      };
       const routes = [];
-      Object.entries(sections).forEach(([sectionName, section]) => {
-        routes.push({
-          route: `/${sectionName}`,
-          payload: section,
-        });
-        Object.entries(section).forEach(([subSectionName, subSection]) => {
-          routes.push({
-            route: `/${sectionName}/${subSectionName}`,
-            payload: subSection,
-          });
-        });
+
+      routes.push({
+        route: `/${data.url}`,
+        payload: data.categories,
+        component: `~/pages/category/index`
       });
+
+      for (category of data.categories) {
+        routes.push({
+          route: `/${data.url}/${category.url}`,
+          payload: category.data,
+          component: `~/pages/category/_name`
+        });
+      }
       return routes;
-    }
-  }
-}
+    },
+  },
+};
